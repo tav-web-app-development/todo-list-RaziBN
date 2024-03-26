@@ -1,8 +1,9 @@
 import { useState } from "react";
 import "./App.css";
+import Tasks from "./Components/Tasks";
 
 function App() {
-  let Tasks = [
+  let tasks = [
     {
       dueDate: "2024-03-30",
       completed: false,
@@ -58,13 +59,13 @@ function App() {
   const [searchBox, setSearchBox] = useState("");
 
   if (searchBox) {
-    Tasks = Tasks.filter((task) => {
+    tasks = tasks.filter((task) => {
       return task.name.toLowerCase().indexOf(searchBox.toLowerCase()) !== -1;
     });
   }
 
   if (checkbox) {
-    Tasks = Tasks.filter((task) => {
+    tasks = tasks.filter((task) => {
       return task.completed === false;
     });
   }
@@ -89,37 +90,13 @@ function App() {
           Show completed tasks
         </label>
       </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Due Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Tasks.map((task) => {
-            let temp = "";
-            if (task.completed) {
-              temp = "line-through";
-            }
-            return (
-              <tr key={task.name}>
-                <td>
-                  <span
-                    style={{
-                      textDecoration: temp,
-                    }}
-                  >
-                    {task.name}
-                  </span>
-                </td>
-                <td>{task.dueDate}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <Tasks
+        checkbox={checkbox}
+        setcheckbox={setcheckbox}
+        searchBox={searchBox}
+        setSearchBox={setSearchBox}
+        tasks={tasks}
+      />
     </>
   );
 }
